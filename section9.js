@@ -54,8 +54,10 @@ const UserFactory = (name, age) => {
 // const user3 = UserFactory('Mary', 32);
 const UserConstructor = function (name, age) {
   //this = {}が定義される
+  if(new.target === undefined) return new UserConstructor(name, age); //プロパティ名になる。関数のなかで定義する必要がある。アロー関数では使用できなくなる
   this.name = name;
   this.age = age;
+  return 'hello'; //オブジェクト以外は無視される。)
   //return this;で返している
 };
 UserConstructor.prototype.greeting = function () {
@@ -67,5 +69,11 @@ const user3 = new UserConstructor('Mary', 32);
 // console.log (user1);
 // console.log (user2);
 // console.log (user3);
-const o = new Object({hi: 'hi'}); //オブジェクト作成するコンストラクタ関数
-o = {}; // {}はObjectと同じ意味になる。基本はこっちでオブジェクトを作成
+// const o = new Object({hi: 'hi'}); //オブジェクト作成するコンストラクタ関数
+o = {
+  a: 1,
+}; // {}はObjectと同じ意味になる。基本はこっちでオブジェクトを作成
+// console.log(o.hasOwnProperty('a')); //hasOwnPropertyはオブジェクトがそのプロパティを持っているかどうかを確認する,prototypeまで確認しない
+// console.log(Object.prototype.hasOwnProperty.call(o, 'a')); //o.hasOwnProperty('a')と同じ意味になる
+// console.log(Object.hasOwn(o, 'a')); //Object.prototype.hasOwnProperty.call(o, 'a')と同じ意味になる
+// console.log('hi' in o); // in演算子はオブジェクトがそのプロパティを持っているかどうかを確認する,prototypeまで確認する
