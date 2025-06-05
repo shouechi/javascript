@@ -9,8 +9,8 @@
 //   c: 3,
 // }); //obj.__proto__と同じようになる。
 const obj = Object.create({ c: 3 }); //prototypeの設定とオブジェクトの作成を同時に行う。
-obj.a =1
-obj.b =3
+obj.a = 1;
+obj.b = 3;
 // obj.__proto__ = 'hello' //__proto__はnullかオブジェクト以外を入れた場合は無視される。
 // console.log(Object.getPrototypeOf(obj)); //prototypeオブジェクトを見ることができる。
 for (const key in obj) {
@@ -54,7 +54,7 @@ const UserFactory = (name, age) => {
 // const user3 = UserFactory('Mary', 32);
 const UserConstructor = function (name, age) {
   //this = {}が定義される
-  if(new.target === undefined) return new UserConstructor(name, age); //プロパティ名になる。関数のなかで定義する必要がある。アロー関数では使用できなくなる
+  if (new.target === undefined) return new UserConstructor(name, age); //プロパティ名になる。関数のなかで定義する必要がある。アロー関数では使用できなくなる
   this.name = name;
   this.age = age;
   return 'hello'; //オブジェクト以外は無視される。)
@@ -62,8 +62,8 @@ const UserConstructor = function (name, age) {
 };
 UserConstructor.prototype.greeting = function () {
   return `Hi! This is ${this.name}. I am ${this.age} years old.`;
-} //
-const user1 = new UserConstructor('Yoshipi', 30); //newを使用した場合はコンストラクタ関数
+}; //
+// const user1 = new UserConstructor('Yoshipi', 30); //newを使用した場合はコンストラクタ関数
 const user2 = new UserConstructor('Tom', 31); //オブジェクトからインスタンスを生成する
 const user3 = new UserConstructor('Mary', 32);
 // console.log (user1);
@@ -77,3 +77,15 @@ o = {
 // console.log(Object.prototype.hasOwnProperty.call(o, 'a')); //o.hasOwnProperty('a')と同じ意味になる
 // console.log(Object.hasOwn(o, 'a')); //Object.prototype.hasOwnProperty.call(o, 'a')と同じ意味になる
 // console.log('hi' in o); // in演算子はオブジェクトがそのプロパティを持っているかどうかを確認する,prototypeまで確認する
+
+class User {
+  id = 120; //クラスフィールドが先に上から順にthisに読み込まれる。数字でも文字列でもいい。get,setは使用できない。
+  birthday = "1990/01/01";
+  constructor(name, age) {
+    this.name = name;
+    this.age = age; //コンストラクタ関数
+  }
+  greeting() {}
+  post() {}
+} //classを使用した関数object,省略記法のメソッドを羅列できる
+const user1 = new User('Yoshipi', 30); //newで呼びした時にconstructor関数が先に実行される
