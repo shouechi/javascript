@@ -81,11 +81,30 @@ o = {
 class User {
   id = 120; //クラスフィールドが先に上から順にthisに読み込まれる。数字でも文字列でもいい。get,setは使用できない。
   birthday = "1990/01/01";
+  #age =0; //プライベートフィールドは#をつける。クラスの外からはアクセスできない。
   constructor(name, age) {
     this.name = name;
-    this.age = age; //コンストラクタ関数
+    this.#age = age; //コンストラクタ関数
   }
   greeting() {}
   post() {}
 } //classを使用した関数object,省略記法のメソッドを羅列できる
 const user1 = new User('Yoshipi', 30); //newで呼びした時にconstructor関数が先に実行される
+
+class Animal {
+  age = 0;
+  constructor(age) {
+    this.age = age;
+  }
+  eat() {}
+}
+class Bird  extends Animal { //継承を使用してAnimalクラスを拡張する, 関数objectも継承できる
+  name = 'bird';
+  constructor(age, name) {
+    super(age); //super()を使用して親クラスのコンストラクタを呼び出す,superの前にthis,returnを使用できない
+    this.name = name;
+  }
+  fly() {}
+}
+const bird = new Bird(3, 'pi');
+console.log(bird); 
