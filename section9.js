@@ -96,7 +96,9 @@ class Animal {
   constructor(age) {
     this.age = age;
   }
-  eat() {}
+  eat() {
+    console.log('eat from animal');
+  }
 }
 class Bird  extends Animal { //継承を使用してAnimalクラスを拡張する, 関数objectも継承できる
   name = 'bird';
@@ -104,7 +106,27 @@ class Bird  extends Animal { //継承を使用してAnimalクラスを拡張す�
     super(age); //super()を使用して親クラスのコンストラクタを呼び出す,superの前にthis,returnを使用できない
     this.name = name;
   }
+
+  eat() {
+    super.eat(); //親クラスのeatメソッドを呼び出す
+    console.log('eat form bird');
+  }
   fly() {}
 }
 const bird = new Bird(3, 'pi');
-console.log(bird); 
+console.log(bird);
+bird.eat(); //親クラスのeatメソッドを呼び出す 
+
+const animalObj = {
+  age: 0,
+  eat() {
+    console.log('eat from animal obj');
+  },
+};
+const birdObj = {
+  age: 1,
+  eat() {
+    super.name = 'pi', //this.nameと同じ意味になる,セッターと同じ扱いになる
+    console.log('eat from bird obj');
+  },
+};
