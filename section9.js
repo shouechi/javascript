@@ -100,22 +100,22 @@ class Animal {
     console.log('eat from animal');
   }
 }
-class Bird  extends Animal { //継承を使用してAnimalクラスを拡張する, 関数objectも継承できる
-  name = 'bird';
-  constructor(age, name) {
-    super(age); //super()を使用して親クラスのコンストラクタを呼び出す,superの前にthis,returnを使用できない
-    this.name = name;
-  }
+// class Bird  extends Animal { //継承を使用してAnimalクラスを拡張する, 関数objectも継承できる
+//   name = 'bird';
+//   constructor(age, name) {
+//     super(age); //super()を使用して親クラスのコンストラクタを呼び出す,superの前にthis,returnを使用できない
+//     this.name = name;
+//   }
 
-  eat() {
-    super.eat(); //親クラスのeatメソッドを呼び出す
-    console.log('eat form bird');
-  }
-  fly() {}
-}
-const bird = new Bird(3, 'pi');
-console.log(bird);
-bird.eat(); //親クラスのeatメソッドを呼び出す 
+//   eat() {
+//     super.eat(); //親クラスのeatメソッドを呼び出す
+//     console.log('eat form bird');
+//   }
+//   fly() {}
+// }
+// const bird = new Bird(3, 'pi');
+// console.log(bird);
+// bird.eat(); //親クラスのeatメソッドを呼び出す 
 
 const animalObj = {
   age: 0,
@@ -130,3 +130,27 @@ const birdObj = {
     console.log('eat from bird obj');
   },
 };
+
+class Bird  { //コンポジションを使用してAnimalクラスを拡張する
+  constructor(age, name) {
+    this.animal = new Animal(age); //Animalクラスのインスタンスを作成
+    this.name = name;
+  }
+
+  eat() {
+    this.animal.eat(); //Animalクラスのeatメソッドを呼び出す
+    console.log('eat form bird');
+  }
+  fly() {}
+}
+const bird = new Bird(3, 'pi');
+console.log(bird);
+bird.eat(); //親クラスのeatメソッドを呼び出す
+bird.animal.age; //Animalクラスのインスタンスのageプロパティにアクセスする
+bird.animal.eat(); //Animalクラスのインスタンスのeatメソッドを呼び出す
+
+class Car {}
+const car = new Car();
+const prius = Object.create(car); //carをprototypeに持つpriusオブジェクトを作成する
+car instanceof Car; //同じインスタンスかどうかを確認する
+Car.prototype.isPrototypeOf(prius); //priusのprototypeがCarのprototypeかどうかを確認する
