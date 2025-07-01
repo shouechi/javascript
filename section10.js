@@ -50,3 +50,20 @@ let [
 ] = yoshipi; //分割代入を使用して配列の要素を変数に代入する,初期値を設定することもできる
 console.log(gender, music, travel, firstName, rest );//restは残りの要素を配列で受け取る
 
+let items = [0, 1, 2];
+items.push(3,4); //末尾に要素を追加する,複数追加できる
+items.pop(); //末尾の要素を削除する
+items.unshift(-2,-1) //先頭に要素を追加する
+items.shift(-2) //先頭の要素を削除する
+
+arrayLinkeObject = {
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  length: 4,
+};
+Array.prototype.push.call(arrayLinkeObject, 3); //Arrayのメソッドをオブジェクトに適用する,length+1をしている
+Array.prototype.pop.call(arrayLinkeObject); //Arrayのメソッドをオブジェクトに適用する,length-1をしている
+Array.from(arrayLinkeObject); //Array.fromを使用してオブジェクトを配列に変換する
+console.log(arrayLinkeObject);
