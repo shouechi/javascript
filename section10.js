@@ -66,4 +66,31 @@ arrayLinkeObject = {
 Array.prototype.push.call(arrayLinkeObject, 3); //Arrayのメソッドをオブジェクトに適用する,length+1をしている
 Array.prototype.pop.call(arrayLinkeObject); //Arrayのメソッドをオブジェクトに適用する,length-1をしている
 Array.from(arrayLinkeObject); //Array.fromを使用してオブジェクトを配列に変換する
-console.log(arrayLinkeObject);
+
+items = [0, 1, 2];
+items.splice(1, 1, 1.1); //既存の配列を操作する。第一引数にインデックス、第二引数に削除する要素数を指定して要素を削除する、第３引数に削除した代わりに変更する。
+items.tosplice(1, 0, 1.1); //tospliceは新しい配列を作成する。第一引数にインデックス、第二引数に削除する要素数を指定して要素を削除する、第３引数に削除した代わりに変更する。
+
+items = [0, 1, 2, 3, 4];
+items.fill(0); //配列の全ての要素を指定した値で埋める
+items.fill(1, 2, 4) //第１引数で埋める値、第２引数で開始インデックス、第３引数で終了インデックスを指定して埋める
+
+items = [0, 1, 2, 3, 4];
+items.copyWithin(0, 2, 4)//配列の一部をコピーして、指定した位置に挿入する。第一引数にコピーしたいインデックス、第二引数にコピー元の開始インデックス、第三引数にコピー元の終了インデックスを指定する。
+
+items = [0, 1, 2, 3, 4];
+items.reverse(); //既存の配列を操作する。配列の要素を逆順に並べ替える
+items.toreverse(); //toreverseは新しい配列を作成する。配列の要素を逆順に並べ替える
+
+items = [10, 0, 1, 2,];
+items.sort((a, b) => {
+  return a - b; //昇順に並べ替える。aがbより小さい場合は負の値を返す。aがbより大きい場合は正の値を返す。等しい場合は0を返す。
+}); //既存の配列を操作する。配列の要素を昇順に並べ替える
+items.tosort((a, b) => {
+  return a - b; //昇順に並べ替える。aがbより小さい場合は負の値を返す。aがbより大きい場合は正の値を返す。等しい場合は0を返す。
+}); //toreverseは新しい配列を作成する。配列の要素を昇順に並べ替える
+
+items = [0, 1, 2, 3, 4];
+items.slice(2); //配列の一部を切り出して新しい配列を作成する。第一引数に開始インデックスを指定する。第二引数を省略すると最後まで切り出す。
+console.log(items);
+
