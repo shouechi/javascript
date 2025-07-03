@@ -69,7 +69,7 @@ Array.from(arrayLinkeObject); //Array.fromを使用してオブジェクトを�
 
 items = [0, 1, 2];
 items.splice(1, 1, 1.1); //既存の配列を操作する。第一引数にインデックス、第二引数に削除する要素数を指定して要素を削除する、第３引数に削除した代わりに変更する。
-items.tosplice(1, 0, 1.1); //tospliceは新しい配列を作成する。第一引数にインデックス、第二引数に削除する要素数を指定して要素を削除する、第３引数に削除した代わりに変更する。
+items.toSpliced(1, 0, 1.1); //tospliceは新しい配列を作成する。第一引数にインデックス、第二引数に削除する要素数を指定して要素を削除する、第３引数に削除した代わりに変更する。
 
 items = [0, 1, 2, 3, 4];
 items.fill(0); //配列の全ての要素を指定した値で埋める
@@ -80,17 +80,43 @@ items.copyWithin(0, 2, 4)//配列の一部をコピーして、指定した位�
 
 items = [0, 1, 2, 3, 4];
 items.reverse(); //既存の配列を操作する。配列の要素を逆順に並べ替える
-items.toreverse(); //toreverseは新しい配列を作成する。配列の要素を逆順に並べ替える
+items.toReversed(); //toreverseは新しい配列を作成する。配列の要素を逆順に並べ替える
 
 items = [10, 0, 1, 2,];
 items.sort((a, b) => {
   return a - b; //昇順に並べ替える。aがbより小さい場合は負の値を返す。aがbより大きい場合は正の値を返す。等しい場合は0を返す。
 }); //既存の配列を操作する。配列の要素を昇順に並べ替える
-items.tosort((a, b) => {
+items.toSorted((a, b) => {
   return a - b; //昇順に並べ替える。aがbより小さい場合は負の値を返す。aがbより大きい場合は正の値を返す。等しい場合は0を返す。
 }); //toreverseは新しい配列を作成する。配列の要素を昇順に並べ替える
 
 items = [0, 1, 2, 3, 4];
 items.slice(2); //配列の一部を切り出して新しい配列を作成する。第一引数に開始インデックスを指定する。第二引数を省略すると最後まで切り出す。
-console.log(items);
 
+items = [0, 1, 2];
+result = items.concat([3, 4, 5]);//配列を結合して新しい配列を作成する。concatメソッドは元の配列を変更しない。
+console.log(result);
+
+items = ['a', 'b', 'c'];
+result = items.join('-'); //配列の要素を指定した区切り文字で結合して文字列を作成する。joinメソッドは元の配列を変更しない。
+
+items = ['apple', 'banana', 'grape', 'banana'];
+result =items.indexOf('banana'); //配列の中から指定した要素の最初のインデックスを返す。見つからない場合は-1を返す。
+result = items.lastIndexOf('banana'); //配列の中から指定した要素の最後のインデックスを返す。見つからない場合は-1を返す。
+result = items.includes('banana'); //配列の中に指定した要素が含まれているかどうかを返す。含まれている場合はtrue、含まれていない場合はfalseを返す。
+
+items = [0, 1, 2];
+result = items.map((item, index, array) => {
+  return item * 10;
+}) //配列の各要素に対して指定した関数を実行し、新しい配列を作成する。mapメソッドは元の配列を変更しない。
+
+items = [0, 1, 2];
+result = items.flat(); //配列をフラットにして新しい配列を作成する。第一引数にフラットにする深さを指定する。
+result = items.flatMap((item) => [item, item * 10]); //配列をフラットにして新しい配列を作成する。デフォルトは1。
+
+
+items = [0, 1, 2, 3, 4, 5, 6];
+result = items.filter((item) => {
+  return item > 3;
+}) //配列の各要素に対して指定した関数を実行し、条件を満たす要素だけを含む新しい配列を作成する
+console.log(result);
