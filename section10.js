@@ -119,4 +119,41 @@ items = [0, 1, 2, 3, 4, 5, 6];
 result = items.filter((item) => {
   return item > 3;
 }) //配列の各要素に対して指定した関数を実行し、条件を満たす要素だけを含む新しい配列を作成する
+
+items = [1, 2, 3];
+result = items.reduce((previousItem, item) => {
+  return previousItem + item; //配列の端から順に計算して１つの値を返す。
+}, 0); //第二引数に初期値を指定することができる。
+
+items = ['apple', 'banana', 'grape', 'banana'];
+result = items.find((item) => {
+  return item === 'banana'; //配列の中から条件を満たす最初の要素を返す。見つからない場合はundefinedを返す。
+});
+
+items = [1, 2, 3]; 
+result = items.some((item) => { //someメソッドは配列の中に条件を満たす要素が1つでもあるかどうかを確認する。
+  return item > 2; 
+});
+result = items.every((item) => {
+  return item < 5; //配列の全ての要素が条件を満たすかどうかを返す。全て満たす場合はtrue、1つでも満たさない場合はfalseを返す。
+});
 console.log(result);
+
+items = ['apple', 'banana', 'grape', 'banana'];
+items.forEach((item) => {
+  return item; //ただ配列の中がループされるだけで、何も返さない。
+});
+
+items = ['apple', 'banana', 'grape'];
+items.at(-1)//配列の指定したインデックスの要素を返す。負の値を指定すると、末尾から数えたインデックスを返す。
+items.with(-2, 'orange') //配列の指定したインデックスの要素を新しい値に置き換えた新しい配列を返す。負の値を指定すると、末尾から数えたインデックスを返す。
+
+items = [0, 1, 2, 3, 4, 5];
+ const Obj = Object.groupBy(items, (item)=> {
+  if (item % 2 === 0){
+    return 'even'; //偶数のグループを作成する
+  }
+  return 'odd'; //奇数のグループを作成する
+});
+console.log(Obj);
+
