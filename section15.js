@@ -7,4 +7,17 @@ result = document.body.lastChild; //body要素の最後の子要素を取得す�
 result = document.body.parentNode; //body要素の親要素を取得する。
 result = document.body.nextSibling; //body要素の次の兄弟要素を取得する。
 result = document.body.previousSibling; //body要素の前の兄弟要素を取得する。
+result = document.body.children; //body要素の子要素を取得する。
+result = document.body.firstElementChild; //body要素の最初の子要素を取得する。
+result = document.body.lastElementChild; //body要素の最後の子要素を取得する。
+result = document.body.parentElement; //body要素の親要素を取得する。
+result = document.body.nextElementSibling; //body要素の次の兄弟要素を取得する。
+result = document.body.previousElementSibling; //body要素の前の兄弟要素を取得する。
+result = document.querySelector('#title'); //IDがtitleの要素を取得する。 １つしか取得できない。上から順に取得される。
+result = document.querySelector('p'); //直接タグを指定して取得もできる。１つしか取得できない。上から順に取得される。
+result = document.querySelectorAll('p'); //全てのp要素を取得する。
+result = document.body.closest('html') //body要素の最も近い親要素を取得する。指定したセレクタに一致する最も近い祖先要素を返す。セレクタが一致しない場合はnullを返す。
+result = document.body.matches('body'); //body要素が指定したセレクタに一致するかどうかを確認する。trueまたはfalseを返す。
+result = document.contains(document.body); //documentがbody要素を含んでいるかどうかを確認する。trueまたはfalseを返す。
+
 console.log(result);
