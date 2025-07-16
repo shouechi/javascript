@@ -19,5 +19,12 @@ result = document.querySelectorAll('p'); //全てのp要素を取得する。
 result = document.body.closest('html') //body要素の最も近い親要素を取得する。指定したセレクタに一致する最も近い祖先要素を返す。セレクタが一致しない場合はnullを返す。
 result = document.body.matches('body'); //body要素が指定したセレクタに一致するかどうかを確認する。trueまたはfalseを返す。
 result = document.contains(document.body); //documentがbody要素を含んでいるかどうかを確認する。trueまたはfalseを返す。
-
+result = document.getElementById('title'); //IDがtitleの要素を取得する。getElementByIdは一意のIDを持つ要素を取得するために使用される。IDはページ内で一意である必要がある。
+result = document.getElemnetsByTagName('p'); //指定したタグ名の要素を全て取得する。getElementsByTagNameは指定したタグ名を持つ全ての要素を取得するために使用される。
+result = document.getElemnetsByTagName('p'); //HTMLCollectionを返す。
+result = document.getElementsByClassName('apple'); //指定したクラス名を持つ要素を全て取得する。getElementsByClassNameは指定したクラス名を持つ全ての要素を取得するために使用される。
+result = document.links; //ページ内の全てのリンクを取得する。hre属性がないと取得できない。
+result = document.images; //ページ内の全ての画像を取得する。img要素を取得する。
+result = document.forms; //ページ内の全てのフォームを取得する。form要素を取得する。
+result = document.scripts; //ページ内の全てのスクリプトを取得する。script要素を取得する。
 console.log(result);
