@@ -20,11 +20,26 @@ result = document.body.closest('html') //body要素の最も近い親要素を�
 result = document.body.matches('body'); //body要素が指定したセレクタに一致するかどうかを確認する。trueまたはfalseを返す。
 result = document.contains(document.body); //documentがbody要素を含んでいるかどうかを確認する。trueまたはfalseを返す。
 result = document.getElementById('title'); //IDがtitleの要素を取得する。getElementByIdは一意のIDを持つ要素を取得するために使用される。IDはページ内で一意である必要がある。
-result = document.getElemnetsByTagName('p'); //指定したタグ名の要素を全て取得する。getElementsByTagNameは指定したタグ名を持つ全ての要素を取得するために使用される。
-result = document.getElemnetsByTagName('p'); //HTMLCollectionを返す。
 result = document.getElementsByClassName('apple'); //指定したクラス名を持つ要素を全て取得する。getElementsByClassNameは指定したクラス名を持つ全ての要素を取得するために使用される。
 result = document.links; //ページ内の全てのリンクを取得する。hre属性がないと取得できない。
 result = document.images; //ページ内の全ての画像を取得する。img要素を取得する。
 result = document.forms; //ページ内の全てのフォームを取得する。form要素を取得する。
 result = document.scripts; //ページ内の全てのスクリプトを取得する。script要素を取得する。
+result = document.body.innerHTML; //body要素の内部HTMLを取得する。innerHTMLは要素の内部のHTMLを文字列として返す。
+document.body.innerHTML = '<h1>Hello!</h1> <div>I am Tom</div>'; //body要素の内部HTMLを変更する。innerHTMLは要素の内部のHTMLを文字列として設定する。既存の内容は上書きされる。
+document.querySelector('div').innerHTML = '<h2>I am Yoshipi</h2>'; //div要素の内部HTMLを変更する。querySelectorを使用して、最初のdiv要素を取得し、その内部HTMLを変更する。
+document.querySelector('h1').innerHTML =  'Hi!'; //h1要素の内部HTMLを変更する。querySelectorを使用して、最初のh1要素を取得し、その内部HTMLを変更する。
+// document.querySelector('div').innerHTML += `<p>I am 30 year old.</p>`; //body要素の内部HTMLに新しい要素を追加する。+=演算子を使用して、既存の内容に新しい内容を追加する。
+document
+  .querySelector('div')
+  .insertAdjacentHTML("beforeend",'<p>I am 30 year old.</p>') //insertAdjacentHTMLを使用して、指定した位置に新しいHTMLを挿入する。'beforeend'は要素の最後に挿入することを意味する。
+let UserInput = '初めての投稿！'
+document.body.innerHTML = UserInput;
+UserInput = '初めての投稿! <script>alert(`XSS攻撃`)</script>';
+document.body.innerHTML = UserInput; //XSS攻撃の例。ユーザー入力をそのままHTMLに挿入すると、悪意のあるスクリプトが実行される可能性がある。
+// UserInput = '初めての投稿!<img src="" onerror="alert(`XSS攻撃`)">'; //画像の読み込みエラーを利用したXSS攻撃の例。画像が読み込まれない場合にスクリプトが実行される。';
+// document.body.innerHTML = UserInput; 
+// const username = new URL(location.href).searchParams.get('username');
+// document.body.innerHTML=username; //URLのクエリパラメータからusernameを取得する。location.hrefは現在のURLを取得する。searchParamsはURLのクエリパラメータを操作するためのオブジェクト。
+
 console.log(result);
