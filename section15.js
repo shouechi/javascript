@@ -33,13 +33,23 @@ document.querySelector('h1').innerHTML =  'Hi!'; //h1要素の内部HTMLを変�
 document
   .querySelector('div')
   .insertAdjacentHTML("beforeend",'<p>I am 30 year old.</p>') //insertAdjacentHTMLを使用して、指定した位置に新しいHTMLを挿入する。'beforeend'は要素の最後に挿入することを意味する。
-let UserInput = '初めての投稿！'
-document.body.innerHTML = UserInput;
-UserInput = '初めての投稿! <script>alert(`XSS攻撃`)</script>';
-document.body.innerHTML = UserInput; //XSS攻撃の例。ユーザー入力をそのままHTMLに挿入すると、悪意のあるスクリプトが実行される可能性がある。
-// UserInput = '初めての投稿!<img src="" onerror="alert(`XSS攻撃`)">'; //画像の読み込みエラーを利用したXSS攻撃の例。画像が読み込まれない場合にスクリプトが実行される。';
+// let UserInput = '初めての投稿！'
+// document.body.innerHTML = UserInput;
+// UserInput = '初めての投稿! <script>alert(`XSS攻撃`)</script>';
+// document.body.innerHTML = UserInput; //XSS攻撃の例。ユーザー入力をそのままHTMLに挿入すると、悪意のあるスクリプトが実行される可能性がある。
+// // UserInput = '初めての投稿!<img src="" onerror="alert(`XSS攻撃`)">'; //画像の読み込みエラーを利用したXSS攻撃の例。画像が読み込まれない場合にスクリプトが実行される。';
 // document.body.innerHTML = UserInput; 
 // const username = new URL(location.href).searchParams.get('username');
 // document.body.innerHTML=username; //URLのクエリパラメータからusernameを取得する。location.hrefは現在のURLを取得する。searchParamsはURLのクエリパラメータを操作するためのオブジェクト。
+document.body.innerHTML = '<h1>Hello!</h1> <div>I am Tom</div> How are you?';
+result = document.body.textContent; //タグを除いたテキストコンテントだけを取得する。
+result = document.body.childNodes[3].textContent;
+result = document.textContent; //nullを返す。
+document.body.textContent = 'Hello!'; //body要素のテキストコンテントを変更する。textContentは要素のテキストコンテントを文字列として設定する。既存の内容は上書きされる。XSS対策ができる。
+document.body.innerHTML = '<h1>Hello!</h1> <div>I am Tom</div> How are you?';
+result = document.body.childNodes;
+document.body.childNodes[3].textContent = 'hello'; //body要素の子要素のコンテキストを変更する。
+
+
 
 console.log(result);
