@@ -49,7 +49,18 @@ document.body.textContent = 'Hello!'; //body要素のテキストコンテント
 document.body.innerHTML = '<h1>Hello!</h1> <div>I am Tom</div> How are you?';
 result = document.body.childNodes;
 document.body.childNodes[3].textContent = 'hello'; //body要素の子要素のコンテキストを変更する。
-
+let p = document.createElement('p'); //新しいp要素を作成する。createElementは指定したタグ名の新しい要素を作成するために使用される。
+let text = document.createTextNode('text'); //新しいテキストノードを作成する。
+document.body.innerHTML = '<div>I am Tom<div>';
+p.innerHTML = 'hello';
+p.textContent = 'hello';
+p.append(text);
+// document.querySelector('div').append(p); //div要素の最後に新しいp要素を追加する。複数の要素を追加することもできる。
+// document.querySelector('div').prepend(p); //div要素の最初に新しいp要素を追加する。
+// document.querySelector('div').before(p); //div要素の前に新しいp要素を追加する。
+// document.querySelector('div').after(p); //div要素の後に新しいp要素を追加する。
+document.querySelector('div').append('This is a text.'); //div要素の最後にテキストを追加する。
+document.querySelector('div').append('<p></p>'); //xss攻撃対策もできる。
 
 
 console.log(result);
