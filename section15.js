@@ -62,5 +62,12 @@ p.append(text);
 document.querySelector('div').append('This is a text.'); //div要素の最後にテキストを追加する。
 document.querySelector('div').append('<p></p>'); //xss攻撃対策もできる。
 
-
+p = document.createElement('p');
+p.textContent = 'hello';
+document.body.innerHTML = '<div>I am Tom</div>'
+document.querySelector('div').append(p);
+let p2 = p.cloneNode(true); //pとは別のノードを作成する。子孫ノードまでコピーしたい場合はtrue。
+document.querySelector('div').prepend(p2);
+p.remove(); //DOMツリーから削除する。
+p2.replaceWith(document.createElement('p'), text, 'apple', '<p>banana</p>'); //XSS対策もされている。
 console.log(result);
