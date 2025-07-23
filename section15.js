@@ -70,4 +70,21 @@ let p2 = p.cloneNode(true); //pとは別のノードを作成する。子孫ノ�
 document.querySelector('div').prepend(p2);
 p.remove(); //DOMツリーから削除する。
 p2.replaceWith(document.createElement('p'), text, 'apple', '<p>banana</p>'); //XSS対策もされている。
+result = document.nodeType;
+document.body.id = 'foo' //セッターとしてもできる
+result = document.body.id; //idは要素のidを初期値として取得している。
+document.body.innerHTML = '<input type="text"/>';
+result = document.querySelector('input').type;
+document.querySelector('input').type = 'checkbox'; //変更もできる
+result = document.body.className; //classを取得する。
+result = document.body.classList; //DOMトークンリストとして取得する。
+document.body.attributes.id.value = '26';
+result = document.body.attributes;
+result = document.body.id;
+document.body.id = '17'; //基本的にはattributesの中にある値とプロパティはお互いに影響している。
+result = document.body.getAttribute('id');
+document.body.setAttribute('newattr', 'newattr'); //第一引数に属性、第二引数に値を設定するとattributesに新しい属性が追加される。既存の属性も変更可能。
+result = document.body.hasAttribute('id') //引数の属性があるか確認する。
+result = document.body.removeAttribute('id'); //属性を削除する。
+result = document.body.dataset.myattr;
 console.log(result);
