@@ -87,4 +87,17 @@ document.body.setAttribute('newattr', 'newattr'); //第一引数に属性、第�
 result = document.body.hasAttribute('id') //引数の属性があるか確認する。
 result = document.body.removeAttribute('id'); //属性を削除する。
 result = document.body.dataset.myattr;
+document.body.innerHTML = 'hello';
+result = document.styleSheets
+// document.styleSheets[0].cssRules[0].style.color = 'red'; //cssRulesのstyleを指定することで変更することができる。
+document.body.innerHTML = '<p class="text-green bg-yellow">hello</p>'
+result = document.querySelector('p').className;
+document.querySelector('p').className = 'text-red bg-blue'; //stylecssを変更可能
+result =document.querySelector('p').classList;
+result =document.querySelector('p').classList.remove('bg-blue', 'text-red'); //classを削除できる。引数も複数可能。
+result =document.querySelector('p').classList.add('bg-blue', 'text-red'); //classに追加される。引数も複数可能。
+result =document.querySelector('p').classList.toggle('bg-blue'); //引数のclassがあったら削除、なかったら追加する。
+
+
+
 console.log(result);
