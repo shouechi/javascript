@@ -90,13 +90,28 @@ result = document.body.dataset.myattr;
 document.body.innerHTML = 'hello';
 result = document.styleSheets
 // document.styleSheets[0].cssRules[0].style.color = 'red'; //cssRulesのstyleを指定することで変更することができる。
-document.body.innerHTML = '<p class="text-green bg-yellow">hello</p>'
+document.body.innerHTML = '<p hidden style="color: white; background-color"class="text-green bg-yellow">hello</p>'
 result = document.querySelector('p').className;
 document.querySelector('p').className = 'text-red bg-blue'; //stylecssを変更可能
 result =document.querySelector('p').classList;
 result =document.querySelector('p').classList.remove('bg-blue', 'text-red'); //classを削除できる。引数も複数可能。
 result =document.querySelector('p').classList.add('bg-blue', 'text-red'); //classに追加される。引数も複数可能。
 result =document.querySelector('p').classList.toggle('bg-blue'); //引数のclassがあったら削除、なかったら追加する。
+result = document.querySelector('p').style;
+document.querySelector('p').style.color = 'yellow'; //pタグの色を変更する。
+document.querySelector('p').style.backgroundColor = 'pink'; //バックグランドカラーを変更する。
+document.querySelector('p').style.width = '300px'; //幅を変更する。指定する際は文字列で指定する。
+document.querySelector('p').style.width = ''; //空文字にすることで削除できる。
+document.querySelector('p').style.display = 'none'; //非表示になる。
+document.querySelector('p').style.display = ''; //表示される。
+document.querySelector('p').hidden = true; //非表示になる。
+document.querySelector('p').hidden = false; //表示にされる。
+result = document.querySelector('p').setAttribute('style', 'color: white; background-color: skyblue'); //setAttribeteでstyleを指定するこで変更できる。
+result = document.querySelector('p').style.cssText;
+document.querySelector('p').style.cssText = 'color: yellow; background-color: black'; //setAttribeteと同じことができる。
+
+
+
 
 
 
