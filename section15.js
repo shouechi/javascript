@@ -109,7 +109,29 @@ document.querySelector('p').hidden = false; //表示にされる。
 result = document.querySelector('p').setAttribute('style', 'color: white; background-color: skyblue'); //setAttribeteでstyleを指定するこで変更できる。
 result = document.querySelector('p').style.cssText;
 document.querySelector('p').style.cssText = 'color: yellow; background-color: black'; //setAttribeteと同じことができる。
-
+document.body.innerHTML = `<div class="box">
+<h2>Hello!</h2>
+<h2>I am Yoshipi</h2>
+<h2>How are you?</h2>
+</div><p style="margin: 100px 0">this is p</p>`
+document.querySelector('div').getBoundingClientRect();
+const messageEl = document.createElement('p');
+messageEl.textContent = 'message!';
+document.body.append(messageEl);
+messageEl.style.position = 'absolute';
+messageEl.style.top = `${document.querySelector('div').getBoundingClientRect().bottom}px`; //divタグと同じ底の高さになる。
+messageEl.style.left = `${document.querySelector('div').getBoundingClientRect().left}px`; //divタグの左に配置される。
+result = document.elementFromPoint(300, 300); //座礁から要素を取得することができる。
+result = document.querySelector('div').clientWidth //ボーダーを含まない内側の幅。
+result = document.querySelector('div').clientHeight //ボーダーを含まない内側の高さ。
+result = document.querySelector('div').clientLeft //左側のボーダーの幅。
+result = document.querySelector('div').clientTop //上のボーダーの幅。
+result = document.querySelector('div').scrollHeight //全ての高さを取得できる。ボーダーは含まない。
+result = document.querySelector('div').scrollWidth //全ての幅を取得できる。ボーダーは含まない。
+document.documentElement.style.border = '25px solid black';
+document.body.style.border = '25px solid orange';
+result = document.documentElement.getBoundingClientRect().height; //一番上から下までの高さを取得できる。
+result = document.documentElement.clientHeight; //画面領域の高さを返す。
 
 
 
