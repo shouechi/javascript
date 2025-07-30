@@ -113,7 +113,7 @@ document.body.innerHTML = `<div class="box">
 <h2>Hello!</h2>
 <h2>I am Yoshipi</h2>
 <h2>How are you?</h2>
-</div><p style="margin: 100px 0">this is p</p>`
+</div><p style="margin: 1000px 0">this is p</p>`
 document.querySelector('div').getBoundingClientRect();
 const messageEl = document.createElement('p');
 messageEl.textContent = 'message!';
@@ -132,9 +132,17 @@ document.documentElement.style.border = '25px solid black';
 document.body.style.border = '25px solid orange';
 result = document.documentElement.getBoundingClientRect().height; //一番上から下までの高さを取得できる。
 result = document.documentElement.clientHeight; //画面領域の高さを返す。
-
-
-
-
+scrollTo({
+  left: 0,
+  top:100,
+  behavior: 'smooth',
+})
+document.querySelector('p').scrollIntoView({
+  behavior: 'smooth',
+  block: 'center',
+  inline: 'nearest',
+})
+document.body.style.overflow = 'hidden'; //スクロールができなくなる。
+document.body.style.overflow = ''; //スクロールできるようになる。
 
 console.log(result);
