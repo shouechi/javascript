@@ -27,17 +27,32 @@ button.onclick = function (event) {
 }; //onclickの場合もaddEventListenerと同じになる。
 const input = document.querySelector('input');
 input.addEventListener('input', () => {
-  console.log('input from input')
+  console.log('input from input in the bubbling phase')
 }); //文字を入力するごとに表示される。
 document.addEventListener('input', () => {
-  console.log('input from document')
+  console.log('input from document in the bubbling phase')
 });
 document.body.addEventListener('input', () => {
-  console.log('input from boby')
+  console.log('input from boby in the bubbling phase')
 });
 window.addEventListener('input', () => {
-  console.log('input from window')
+  console.log('input from window in the bubbling phase')
 });//inputから順番にイベントが実行される。(バブリング)
-window.addEventListener('keydown', () => {
-  console.log('input from input')
-}); //キーが当たっているところを表示する。(inputでなく、bodyに合っている場合)
+// window.addEventListener('keydown', () => {
+//   console.log('input from input')
+// }); //キーが当たっているところを表示する。(inputでなく、bodyに合っている場合)
+const inputHanlder = () => {
+  console.log('input from input in the chature phase')
+}
+input.addEventListener('input', inputHanlder
+, {capture: true}); //captureから先に実行される。
+input.removeEventListener('input', inputHanlder, {capture: true}); //inputHanlderを削除する。
+document.addEventListener('input', () => {
+  console.log('input from document in the chature phase')
+});
+document.body.addEventListener('input', () => {
+  console.log('input from boby in the chature phase')
+});
+window.addEventListener('input', () => {
+  console.log('input from window in the chature phase')
+});
