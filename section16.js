@@ -26,7 +26,12 @@ button.onclick = function (event) {
   console.log(this);
 }; //onclickの場合もaddEventListenerと同じになる。
 const input = document.querySelector('input');
-input.addEventListener('input', () => {
+let captureEvent;
+let targetEvent;
+let bubblingEvent;
+input.addEventListener('input', (event) => {
+  console.log(event.currentTarget)
+  targetEvent = event;
   console.log('input from input in the bubbling phase')
 }); //文字を入力するごとに表示される。
 document.addEventListener('input', () => {
@@ -35,7 +40,10 @@ document.addEventListener('input', () => {
 document.body.addEventListener('input', () => {
   console.log('input from boby in the bubbling phase')
 });
-window.addEventListener('input', () => {
+window.addEventListener('input', (event) => {
+  event.stopImmediatePropagation(); //それ以降の処理はしない。同じ要素があっても処理しない。
+  console.log(event.currentTarget)
+  bubblingEvent =  event;
   console.log('input from window in the bubbling phase')
 });//inputから順番にイベントが実行される。(バブリング)
 // window.addEventListener('keydown', () => {
@@ -53,6 +61,18 @@ document.addEventListener('input', () => {
 document.body.addEventListener('input', () => {
   console.log('input from boby in the chature phase')
 });
-window.addEventListener('input', () => {
+window.addEventListener('input', (event) => {
+  event.stopPropagation(); //それ以降の処理はしない。同じ要素は処理される。
+  console.log(event.currentTarget)
+  captureEvent = event;
   console.log('input from window in the chature phase')
-});
+});//event.currentTargetはthisと同じ動きをする。
+const aEl = document.querySelector('a');
+// aEl.addEventListener('click', (event) => {
+//   event.preventDefault();
+// }) //preventDefaultでaタグを無効にすることができる。
+// window.addEventListener('click', (event) => {
+//   console.log(event.defaultPrevented); //preventDefaultがtrueかfalseを確認する。
+//   alert('window');
+// }) 
+aEl.onclick = () => false; //preventDefault動きにある。on系の場合のみ使用できる。
