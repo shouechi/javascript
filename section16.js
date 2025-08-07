@@ -75,4 +75,23 @@ const aEl = document.querySelector('a');
 //   console.log(event.defaultPrevented); //preventDefaultがtrueかfalseを確認する。
 //   alert('window');
 // }) 
-aEl.onclick = () => false; //preventDefault動きにある。on系の場合のみ使用できる。
+// aEl.onclick = () => false; //preventDefault動きにある。on系の場合のみ使用できる。
+// document.documentElement.style.height = '1500px'
+// window.addEventListener('wheel', (event) => {
+//   for (let i = 0; i < 1e9; i++);
+//   console.log(event);
+// }, { passive: true}); //paassiveをtrueにすることで重たい処理を滑らかに処理することができる。
+document.addEventListener('my-event', (event) => {
+  console.log(event)
+})
+window.addEventListener('my-event', (event) => {
+  console.log(event)
+}, true) //キャプチャリングはできる。
+window.addEventListener('my-event', (event) => {
+  console.log(event)
+})
+const myEvent = new Event('my-event', {
+  bubbles: true,
+  cancelable: true,
+}); //イベントを独自で作成できる。bubblesをtrueにすることでバブリングができる。
+document.dispatchEvent(myEvent); //イベントを発生させることができる。
