@@ -4,35 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      body {
-        color: blue;
-      }
-      .text-green {
-        color: green;
-      }
-      .text-red {
-        color: red;
-      }
-      .bg-yellow {
-        background-color: yellow;
-      }
-      .bg-blue {
-        background-color: blue;
-      }
-      .box {
-        width: 300px;
-        height: 100px;
-        border: 25px solid blue;
-        margin: 200px;
-        overflow: scroll;
-      }
-    </style>
+    <script src="section16.js" defer></script> <!--DOMの構築、CSSOMを待たずにダウンロードされる。実行は構築後。-->
+    <!-- <script src="section16.js" async></script> すぐに実行される。 -->
   </head>
-  <body id="body-id"  data-myattr="myattr" class="succces error">
-    <h1 id="title" class="apple">Title</h1>
-    <p name="hello">hello</p>
-    <a href="">hello</a>
-    <script src="section15.js"></script>
+  <body>
+    <button>click me</button>
+    <button onclick="console.log(event.type)">click me</button>
+    <input type="text" />
+    <a href="https://developer.mozilla.org">MDN</a>
   </body>
 </html>
