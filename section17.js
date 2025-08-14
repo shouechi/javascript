@@ -110,3 +110,16 @@ new Promise((resolve) => resolve(1))
   })
 console.log(promise);
 
+promise = new Promise((resolve) => resolve(1))
+  let promise2 = promise.then((value) => {
+    console.log(value);
+    return 2;
+  })
+  let promise3 = promise2.then((value) => {
+    console.log(value);
+    throw new Error(3);
+  })
+  let promise4 = promise3.catch((error) => {
+    console.log(error.message);
+    throw new Error(4); //catchはrejectリアクションに入る。
+  }); //変数の中身は全て同じになる。
