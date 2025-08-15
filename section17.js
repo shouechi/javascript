@@ -123,3 +123,46 @@ promise = new Promise((resolve) => resolve(1))
     console.log(error.message);
     throw new Error(4); //catchはrejectリアクションに入る。
   }); //変数の中身は全て同じになる。
+  let finallyFunc = () => {};
+  let promise5 =promise4.finally(finallyFunc); //finallyはresolve、rejectされても実行される。
+  let promise6 = promise5.then(() => {
+    throw new Error('error');
+  });
+  promise6.then(() => {})
+  promise7 = promise6.catch((error) => {
+    console.log(error.message);
+  }); //then,catch,finallyがrejectされてない時にエラーが出る。
+  navigator.mediaDevices.getDisplayMedia({video :true}) //promiseを返すため、thenなどを使用できる。
+  .then((value) => {
+    console.log(value);
+  })
+  .catch((error) => {
+    console.log('error', error.message);
+  })
+  .then(() => {
+    return navigator.clipboard.readText(); //クリップボードを読み取れたら、resolveを返す。
+  })
+  .then((text) => {
+    console.log(text);
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
+
+  let promisifiedSetTimeout = (time) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, time);
+    });
+  }; //関数を作成する。
+  promisifiedSetTimeout(1000)
+  .then(() => {
+    console.log('promisifiedSetTimeout1');
+    return promisifiedSetTimeout(1000);
+  })
+  .then(() => {
+    console.log('promisifiedSetTimeout2')
+  })
+
+  
