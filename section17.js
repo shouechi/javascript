@@ -164,5 +164,77 @@ promise = new Promise((resolve) => resolve(1))
   .then(() => {
     console.log('promisifiedSetTimeout2')
   })
+promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    // resolve(1)
+    reject(1) //最初にrejectされたものがerrorに入る。
+  }, 1000)
+})
 
+promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    // resolve(2)
+    reject(2) //２は無視される。
+  }, 2000)
+})
+
+promise3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(3)
+  }, 500)
+});
+Promise.all([promise, promise2, promise3, {then(resolve) {resolve(4)}},5, {value: 6}]).then((value) => {
+  console.log('Promise.all() then:', value);
+}) //第一引数にイテラブルオブジェクト。返り値にpromiseを返しているため、thenで繋げることができる。thenナブルオブジェクト、オブジェクトも引数として可能
+.catch((error) => {
+  console.log('Promise.all() catch:', error)
+})
+
+Promise.allSettled([promise, 
+  promise2, 
+  promise3, 
+  {then(resolve) {resolve(4)}},
+  5, 
+  {value: 6}])
+  .then((value) => {
+  console.log('Promise.allSettled() then:', value);
+}) 
+.catch((error) => {
+  console.log('Promise.allSettled() catch:', error)
+}); //rejectされてもそのまま処理を続行する。
+
+Promise.race([promise, 
+  promise2, 
+  promise3, 
+  {then(resolve) {resolve(4)}},
+  5, 
+  {value: 6}])
+  .then((value) => {
+  console.log('Promise.race() then:', value);
+}) 
+.catch((error) => {
+  console.log('Promise.race() catch:', error)
+}); //一番最初にresolveかrejectされたものを対応する。
+
+Promise.any([promise, 
+  promise2, 
+  promise3, 
+  {then(resolve) {resolve(4)}},
+  5, 
+  {value: 6}])
+  .then((value) => {
+  console.log('Promise.any() then:', value);
+}) 
+.catch((error) => {
+  console.log('Promise.any() catch:', error)
+}); //一番最初にresolveされたものを対応する。
+Promise.resolve('value'); //new Promise((resolve)=>resolve('value'))の書き換え
+Promise.reject(new Error('error')); //new Promise((reject)=>reject(new Error('error')))の書き換え
+const {promise: newPromise, resolve, resolve2} = Promise.withResolvers(); //３つのオブジェクトを返すメソッド。
+function func() {
+  throw 'hello';
+}
+Promise.try(func)
+  .then((value) => console.log(value))
+  .catch((error) => console.log(error)) //引数に関数を入れる。promise以外の返り値でも対応できる。
   
