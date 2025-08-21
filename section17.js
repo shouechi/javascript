@@ -237,4 +237,12 @@ function func() {
 Promise.try(func)
   .then((value) => console.log(value))
   .catch((error) => console.log(error)) //引数に関数を入れる。promise以外の返り値でも対応できる。
-  
+
+  // setTimeout(() => {
+  //   console.log('after 1000ms');
+  // }, 1000); //for文の処理が終了してから実行される。
+  // for (let i = 0; i < 1e9; i++);
+
+  for (let i = 0; i <= 1e5; i++) {
+    document.body.textContent = i;
+  }; //for文の処理が終わってから最後にレンダリングする。
