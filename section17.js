@@ -246,3 +246,10 @@ Promise.try(func)
   for (let i = 0; i <= 1e5; i++) {
     document.body.textContent = i;
   }; //for文の処理が終わってから最後にレンダリングする。
+
+  window.addEventListener('custom-event', () => {
+    console.log('custom-event from window');
+  })
+  window.dispatchEvent(new CustomEvent('coutmo-event')); //dispatchEventは動機的な動きなるため、先に実行される。
+  console.log('after dispatch event');
+
