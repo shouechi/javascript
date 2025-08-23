@@ -1,0 +1,305 @@
+// setTimeout(() => {
+//   // console.log(2);
+// }, 1000); //第１引数に関数、第２引数に秒数を指定する。非同期的な動きをする。
+// window.addEventListener('click', () => {
+//   console.log(2);
+// }); //非同期的な動きをする。
+// // console.log(1);
+// // window.addEventListener('click', (e) => {
+// //   console.log(e);
+// //   setTimeout(() => {
+// //     console.log('setTimeout')
+// //     navigator.geolocation.getCurrentPosition((position) => {
+// //       console.log(position);
+// //       setInterval(() => {
+// //         console.log('setInterval')
+// //       }, 1000)
+// //     })
+// //   }, 1000)
+// // }) //コールバック地獄になる。
+// try{
+//   // setTimeout(() => {
+//   // throw new Error('error');
+//   // }, 1000);
+//   navigator.geolocation.getCurrentPosition((position) => {
+//        console.log(position);
+// },(error) => {
+//   console.log(error);
+// });//第２引数にコールバック関数はC++のエラー文を返す。getCurrentPositionに限る。
+// } catch (error) {
+//   console.log(error);
+// }//エラーを取得できない。トライ文から抜けた後に実行されるため取得ができない。
+let promise =new Promise((resolve, reject) =>{
+  resolve('error');//関数オブジェクトになる。変更は１度だけになる。
+  // console.log('new promise');
+}); //第１引数にコールバック関数を入れいないといけない。
+promise = new Promise((resolve) => {
+  let tmpPromise = new Promise((resolve2) => {
+    setTimeout(() => {
+      resolve2()
+    }, 1000);
+  });
+  resolve(tmpPromise);//先に内側のpromiseが実行されてから、最後に外側が実行される。
+})//実行さしてもないも起きない。
+promise = new Promise(() => {});
+// promise =new Promise((reject) =>{
+//   // resolve(); //この場合は、thenとfinallyが実行される。
+//   setTimeout(() => {
+//     reject(new Error('error')); //この場合は、catchとfinallyが実行される。
+//   },1000); 
+// }); //resolve, rejectを使い回すには、非同期処理を使用する。
+promise.then((value) => {
+  console.log('then', value);
+}, (error) => {
+  console.log('then rejected', error.message);
+}) //第２引数はcatchと同じコールバック関数になる。
+promise.catch(() => {
+  console.log('catch')
+})
+promise.finally(() => {
+  console.log('finally')
+})//何も値を返さない。
+new Promise((resolve) => resolve(1))
+  .then((value) => {
+    console.log(value);
+    return 2;//returnすること次にthenに移り、第１引数に入る。
+  })
+  .then((value) => {
+    console.log(value);
+    throw new Error(3); //throwの場合は次のcatchに移り、第１引数に入る。
+  })
+  .catch((error) => {
+    console.log(error.message);
+    throw new Error(4); //throwの場合は次のcatchに移り、第１引数に入る。
+  }) //いくでもthen、catchを繋げることができる。
+  .catch((error) => {
+    console.log(error.message);
+    return 5; //returnすること次にthenに移り、第１引数に入る。
+  })
+  .then((value) => {
+    console.log(value);
+    return 6; //次がcatchだった場合は、処理がスキップされる。
+  })
+  .catch(() => console.log('skip'))
+  .then((value) => {
+    console.log(value);//ruturnでの６が第一引数に入る。
+    throw new Error(7);
+  })//returnの場合はthenを探して、引数を渡す。
+  .then(() => console.log('skip'))
+  .catch((error) => {
+    console.log(error.message);
+    return 8;
+  })//throwの場合はcatchを探して、引数を渡す。最後まで探してcatchがない場合はエラーが出る。
+  .catch(() => console.log('skip'))
+  .finally((value) => {
+    console.log('finally value: ', value)//第１引数には何も入らない。thenを探す。
+    return new Promise((resolve) => {//この場合は、1秒待ってから8が表示される。
+      setTimeout(() => {
+        resolve();
+      }, 1000)
+    })
+  })
+  .then((value) => {
+    console(value);
+  })
+  .finally(() => {
+    throw new Error(9); //この場合はcatch探しが始まる。
+  })
+  .catch((error) => {
+    console.log(error.messsage);
+  })
+console.log(promise);
+
+promise = new Promise((resolve) => resolve(1))
+  let promise2 = promise.then((value) => {
+    console.log(value);
+    return 2;
+  })
+  let promise3 = promise2.then((value) => {
+    console.log(value);
+    throw new Error(3);
+  })
+  let promise4 = promise3.catch((error) => {
+    console.log(error.message);
+    throw new Error(4); //catchはrejectリアクションに入る。
+  }); //変数の中身は全て同じになる。
+  let finallyFunc = () => {};
+  let promise5 =promise4.finally(finallyFunc); //finallyはresolve、rejectされても実行される。
+  let promise6 = promise5.then(() => {
+    throw new Error('error');
+  });
+  promise6.then(() => {})
+  promise7 = promise6.catch((error) => {
+    console.log(error.message);
+  }); //then,catch,finallyがrejectされてない時にエラーが出る。
+  navigator.mediaDevices.getDisplayMedia({video :true}) //promiseを返すため、thenなどを使用できる。
+  .then((value) => {
+    console.log(value);
+  })
+  .catch((error) => {
+    console.log('error', error.message);
+  })
+  .then(() => {
+    return navigator.clipboard.readText(); //クリップボードを読み取れたら、resolveを返す。
+  })
+  .then((text) => {
+    console.log(text);
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
+
+  let promisifiedSetTimeout = (time) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, time);
+    });
+  }; //関数を作成する。
+  promisifiedSetTimeout(1000)
+  .then(() => {
+    console.log('promisifiedSetTimeout1');
+    return promisifiedSetTimeout(1000);
+  })
+  .then(() => {
+    console.log('promisifiedSetTimeout2')
+  })
+promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    // resolve(1)
+    reject(1) //最初にrejectされたものがerrorに入る。
+  }, 1000)
+})
+
+promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    // resolve(2)
+    reject(2) //２は無視される。
+  }, 2000)
+})
+
+promise3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(3)
+  }, 500)
+});
+Promise.all([promise, promise2, promise3, {then(resolve) {resolve(4)}},5, {value: 6}]).then((value) => {
+  console.log('Promise.all() then:', value);
+}) //第一引数にイテラブルオブジェクト。返り値にpromiseを返しているため、thenで繋げることができる。thenナブルオブジェクト、オブジェクトも引数として可能
+.catch((error) => {
+  console.log('Promise.all() catch:', error)
+})
+
+Promise.allSettled([promise, 
+  promise2, 
+  promise3, 
+  {then(resolve) {resolve(4)}},
+  5, 
+  {value: 6}])
+  .then((value) => {
+  console.log('Promise.allSettled() then:', value);
+}) 
+.catch((error) => {
+  console.log('Promise.allSettled() catch:', error)
+}); //rejectされてもそのまま処理を続行する。
+
+Promise.race([promise, 
+  promise2, 
+  promise3, 
+  {then(resolve) {resolve(4)}},
+  5, 
+  {value: 6}])
+  .then((value) => {
+  console.log('Promise.race() then:', value);
+}) 
+.catch((error) => {
+  console.log('Promise.race() catch:', error)
+}); //一番最初にresolveかrejectされたものを対応する。
+
+Promise.any([promise, 
+  promise2, 
+  promise3, 
+  {then(resolve) {resolve(4)}},
+  5, 
+  {value: 6}])
+  .then((value) => {
+  console.log('Promise.any() then:', value);
+}) 
+.catch((error) => {
+  console.log('Promise.any() catch:', error)
+}); //一番最初にresolveされたものを対応する。
+Promise.resolve('value'); //new Promise((resolve)=>resolve('value'))の書き換え
+Promise.reject(new Error('error')); //new Promise((reject)=>reject(new Error('error')))の書き換え
+const {promise: newPromise, resolve, resolve2} = Promise.withResolvers(); //３つのオブジェクトを返すメソッド。
+function func() {
+  throw 'hello';
+}
+Promise.try(func)
+  .then((value) => console.log(value))
+  .catch((error) => console.log(error)) //引数に関数を入れる。promise以外の返り値でも対応できる。
+
+  // setTimeout(() => {
+  //   console.log('after 1000ms');
+  // }, 1000); //for文の処理が終了してから実行される。
+  // for (let i = 0; i < 1e9; i++);
+
+  for (let i = 0; i <= 1e5; i++) {
+    document.body.textContent = i;
+  }; //for文の処理が終わってから最後にレンダリングする。
+
+  window.addEventListener('custom-event', () => {
+    console.log('custom-event from window');
+  })
+  window.dispatchEvent(new CustomEvent('coutmo-event')); //dispatchEventは動機的な動きなるため、先に実行される。
+  console.log('after dispatch event');
+
+let asyncFunc = async () => {
+  // return 'hello' //returnされたらresolveされる。
+  // throw new Error('error') //throwされたらrejectされる。
+  // let result = navigator.mediaDevices.getUserMedia({video: true}) //resolveされることによって引数を変数に入れることができる。
+  // console.log(result);
+  // await promisifiedSetTimeout(2000); //promiseチェーンと同じことができる。
+  // console.log('2000ms')
+  await 1;
+  try {
+    result = await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error(2));
+    }, 1000);
+  })
+  } catch (error) {
+    console.log(error.message)
+  }
+  
+} //Promiseとawait演算子を使用できる。async awaitのエラーはtrycatchを使用する。
+let result = asyncFunc();
+console.log(result);
+
+
+
+promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(1)
+    // reject(1)
+  }, 1000)
+})
+
+promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(2)
+    // reject(2)
+  }, 2000)
+})
+
+promise3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(3)
+  }, 500)
+});
+let promises = [promise, promise2, promise3];
+(async () => {
+  for await (const result of promises) {
+    // await promise //for awaitをすることでawait promiseを省略できる。
+    console.log(result);
+  }
+})(); //asynceを使用することで順番通りに取得できる。
