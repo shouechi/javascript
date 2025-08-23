@@ -253,3 +253,53 @@ Promise.try(func)
   window.dispatchEvent(new CustomEvent('coutmo-event')); //dispatchEventは動機的な動きなるため、先に実行される。
   console.log('after dispatch event');
 
+let asyncFunc = async () => {
+  // return 'hello' //returnされたらresolveされる。
+  // throw new Error('error') //throwされたらrejectされる。
+  // let result = navigator.mediaDevices.getUserMedia({video: true}) //resolveされることによって引数を変数に入れることができる。
+  // console.log(result);
+  // await promisifiedSetTimeout(2000); //promiseチェーンと同じことができる。
+  // console.log('2000ms')
+  await 1;
+  try {
+    result = await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error(2));
+    }, 1000);
+  })
+  } catch (error) {
+    console.log(error.message)
+  }
+  
+} //Promiseとawait演算子を使用できる。async awaitのエラーはtrycatchを使用する。
+let result = asyncFunc();
+console.log(result);
+
+
+
+promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(1)
+    // reject(1)
+  }, 1000)
+})
+
+promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(2)
+    // reject(2)
+  }, 2000)
+})
+
+promise3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(3)
+  }, 500)
+});
+let promises = [promise, promise2, promise3];
+(async () => {
+  for await (const result of promises) {
+    // await promise //for awaitをすることでawait promiseを省略できる。
+    console.log(result);
+  }
+})(); //asynceを使用することで順番通りに取得できる。
