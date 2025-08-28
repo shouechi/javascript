@@ -13,9 +13,20 @@ JSON.stringify(result); //stirngifyはJSONに変換する。
 let input = document.querySelector('input');
 input.addEventListener('change',() => {
   let file = input.files[0];
+  let fromData = new FormData();
+  fromData.append('user', 'yoshipi') //第１引数にcontent-typeのname、第２引数に実際に入れる値を指定できる。
+  fromData.append('password', 'fjaifajif')
+  fromData.has('user') //引数に値があるのか確認する。
+  fromData.get('user') //引数の値を取得する。
+  fromData.get('blob') //引数の値をファイルオブジェクトで取得する。
+  fromData.delete('password') //引数の値を削除する。
+  fromData.set('profile', file) //引数の値を上書きする。
+  let form = document.querySelector('form');
+  fromData = new FormData(form); //引数にformを指定することで初期値として設定できる。
+
   fetch('https://jsonplaceholder.typicode.com/posts', {
     method: 'POST',
-    body: file, //bodyにBolbを指定した際はCentent-Typeは自動的に設定される。
+    body: fromData, //bodyにBolbを指定した際はCentent-Typeは自動的に設定される。
   });
   let objectURL = URL.createObjectURL(file); //引数にBlobを指定する。
   let img = document.querySelector('img');
@@ -30,3 +41,13 @@ new Blob([new ArrayBuffer(), 'hello', new Blob()], {
 }); //Blobはバイナリーデータを扱うオブジェクト。複数のデータをまとめることができる。
 new TextDecoder().decode(new ArrayBuffer(16)); //ArrayBufferのデータをUTF-8の文字列として返す。
 new TextEncoder().encode('hello'); //UTF-8の文字列をYouint8Arrayとして返す。
+(async () => {
+  let response = await fetch('https://jsonplaceholder.typicode.com/posts') //awaitの時点でhederまで取得できている。
+  // result = await response.arrayBuffer(); //bodyのデータを取得する。
+  // result = await response.blob(); //bodyのblobデータを取得する。
+  // result = await response.text(); //UTF-8の文字列を取得する。
+  result = await response.json(); //JSONをオブジェクトに変換して取得する。
+  // result = await response.formData(); //formDataを取得する。
+  result = response.bodyUsed; //bodyが使用されたかどうかを取得する。
+
+})();
